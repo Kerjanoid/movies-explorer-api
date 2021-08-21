@@ -45,18 +45,14 @@ module.exports.updateProfile = (req, res, next) => {
 };
 
 module.exports.createUser = (req, res, next) => {
-  const {
-    name, about, avatar, email, password,
-  } = req.body;
+  const { email, password, name } = req.body;
 
   User.findOne({ email }).then((usr) => {
     if (usr) {
       throw new ConflictError("Пользователь с таким email уже существует");
     }
     bcrypt.hash(password, 10)
-      .then((hash) => User.create({
-        name, about, avatar, email, password: hash,
-      }))
+      .then((hash) => User.create({ email, password: hash, name }))
       .then((user) => {
         const userDoc = user._doc;
         delete userDoc.password;

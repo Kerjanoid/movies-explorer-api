@@ -5,7 +5,7 @@ const ForbiddenError = require("../errors/forbidden-err");
 const NotFoundError = require("../errors/not-found-err");
 
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({}).sort({ createdAt: -1 })
+  Movie.find({})
     .then((movies) => {
       res.status(200).send(movies);
     })
@@ -13,10 +13,35 @@ module.exports.getMovies = (req, res, next) => {
 };
 
 module.exports.createMovie = (req, res, next) => {
-  const { name, link } = req.body;
-  Movie.create({ name, link, owner: req.user._id })
-    .then((card) => {
-      res.status(200).send(card);
+  const {
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+  } = req.body;
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailer,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+    owner: req.user._id,
+  })
+    .then((movie) => {
+      res.status(200).send(movie);
     })
     .catch((err) => {
       if (err.name === "ValidationError") {
@@ -28,59 +53,21 @@ module.exports.createMovie = (req, res, next) => {
 };
 
 module.exports.deleteMovieByID = (req, res, next) => {
-  Movie.findById(req.params.cardId)
-    .orFail(new Error("IncorrectCardID"))
-    .then((card) => {
-      if (card.owner.toString() === req.user._id.toString()) {
-        card.remove();
-        res.status(200).send({ message: `Карточка c _id: ${req.params.cardId} успешно удалена.` });
+  Movie.findById(req.params.movieId)
+    .orFail(new Error("IncorrectMovieID"))
+    .then((movie) => {
+      if (movie.owner.toString() === req.user._id.toString()) {
+        movie.remove();
+        res.status(200).send({ message: `Фильм c id: ${req.params.movieId} успешно удалена.` });
       } else {
-        next(new ForbiddenError(`Карточку c _id: ${req.params.cardId} создал другой пользователь. Невозможно удалить.`));
+        next(new ForbiddenError(`Фильм c id: ${req.params.movieId} создал другой пользователь. Невозможно удалить.`));
       }
     })
     .catch((err) => {
       if (err.name === "CastError") {
         next(new BadRequestError("Переданы некорректные данные."));
-      } else if (err.message === "IncorrectCardID") {
-        next(new NotFoundError(`Карточка с указанным _id: ${req.params.cardId} не найдена.`));
-      } else {
-        next(err);
-      }
-    });
-};
-
-module.exports.likeCard = (req, res, next) => {
-  Movie.findByIdAndUpdate(
-    req.params.cardId,
-    { $addToSet: { likes: req.user._id } },
-    { new: true },
-  )
-    .orFail(new Error("IncorrectCardID"))
-    .then((card) => res.send(card))
-    .catch((err) => {
-      if (err.name === "CastError") {
-        next(new BadRequestError("Переданы некорректные данные для постановки лайка."));
-      } else if (err.message === "IncorrectCardID") {
-        next(new NotFoundError(`Карточка с указанным _id: ${req.params.cardId} не найдена.`));
-      } else {
-        next(err);
-      }
-    });
-};
-
-module.exports.dislikeMovie = (req, res, next) => {
-  Movie.findByIdAndUpdate(
-    req.params.cardId,
-    { $pull: { likes: req.user._id } },
-    { new: true },
-  )
-    .orFail(new Error("IncorrectCardID"))
-    .then((card) => res.send(card))
-    .catch((err) => {
-      if (err.name === "CastError") {
-        next(new BadRequestError("Переданы некорректные данные для снятия лайка."));
-      } else if (err.message === "IncorrectCardID") {
-        next(new NotFoundError(`Карточка с указанным _id: ${req.params.cardId} не найдена.`));
+      } else if (err.message === "IncorrectMovieID") {
+        next(new NotFoundError(`Фильм с id: ${req.params.movieId} не найдена.`));
       } else {
         next(err);
       }

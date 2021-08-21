@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { isURL } = require("validator");
+const { regExpYear } = require("../utils/regexp");
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -19,6 +20,12 @@ const movieSchema = new mongoose.Schema({
     minLength: [4, "Длина поля 'year' должна быть 4 символа."],
     maxLength: [4, "Длина поля 'year' должна быть 4 символа."],
     required: [true, "Поле 'year' должно быть заполнено."],
+    validate: {
+      validator(v) {
+        return regExpYear.test(v);
+      },
+      message: "Поле 'year' должно принимать значение 1888-2021.",
+    },
   },
   description: {
     type: String,
@@ -54,8 +61,8 @@ const movieSchema = new mongoose.Schema({
     required: [true, "Поле 'owner' должно быть заполнено."],
   },
   movieId: {
-    type: mongoose.ObjectId,
-    required: [true, "Поле 'owner' должно быть заполнено."],
+    type: String,
+    required: [true, "Поле 'movieId' должно быть заполнено."],
   },
   nameRU: {
     type: String,
