@@ -13,7 +13,7 @@ const NotFoundError = require("./errors/not-found-err");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 const { limiter } = require("./utils/limiter");
 
-const { MONGO_ADRESS, PORT = 3000 } = process.env;
+const { MONGO_ADRESS, PORT = 3001 } = process.env;
 
 app.use(limiter);
 app.use(helmet());
