@@ -12,6 +12,5 @@
  
 ### Планируемые доработки проекта:
 1) Подключить к фронтенду (после его разработки)
-
-### :link: IP-адрес сервера (бэкенд) - [http://84.201.166.163](http://84.201.166.163)  
-### :link: Домен сервера (бэкенд) - [https://express-mesto.kerjanoid.nomoredomains.monster](https://express-mesto.kerjanoid.nomoredomains.monster) 
+  
+### :link: Домен сервера (бэкенд) - [https://api.kerjanoid-movies.nomoredomains.rocks](https://api.kerjanoid-movies.nomoredomains.rocks) 
