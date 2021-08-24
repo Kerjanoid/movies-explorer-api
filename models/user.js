@@ -1,27 +1,26 @@
-const mongoose = require("mongoose");
-const { isEmail } = require("validator");
+const mongoose = require('mongoose');
+const { isEmail } = require('validator');
 
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    unique: [true, "Пользователь с таким 'email' уже существует."],
-    required: [true, "Поле 'email' должно быть заполнено."],
+    unique: true,
+    required: true,
     validate: {
       validator: (v) => isEmail(v),
-      message: "Неправильный формат почты.",
     },
   },
   password: {
     type: String,
-    required: [true, "Поле 'password' должно быть заполнено."],
+    required: true,
     select: false,
   },
   name: {
     type: String,
-    minlength: [2, "Минимальная длина поля 'name' - 2 символа."],
-    maxlength: [30, "Максимальная длина поля 'name' - 30 символов."],
-    required: [true, "Поле 'name' должно быть заполнено."],
+    minlength: 2,
+    maxlength: 30,
+    required: true,
   },
 }, { versionKey: false });
 
-module.exports = mongoose.model("user", userSchema);
+module.exports = mongoose.model('user', userSchema);
