@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 
+const cors = require('./middlewares/cors');
 const errorHandler = require('./middlewares/error');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { limiter } = require('./utils/limiter');
@@ -26,6 +27,8 @@ mongoose.connect(MONGO_ADRESS, {
 app.use(helmet());
 app.use(requestLogger);
 app.use(limiter);
+
+app.use(cors);
 
 app.use(router);
 
