@@ -9,8 +9,7 @@
 4. MongoDB
 5. Mongoose
 6. ESlint
- 
-### Планируемые доработки проекта:
-1) Подключить к фронтенду (после его разработки)
-  
-### :link: Домен сервера (бэкенд) - [https://api.kerjanoid-movies.nomoredomains.rocks](https://api.kerjanoid-movies.nomoredomains.rocks) 
+   
+### :link: Домен сервера (бэкенд) - [https://api.kerjanoid-movies.nomoredomains.rocks](https://api.kerjanoid-movies.nomoredomains.rocks)
+### :link: Домен сервера (фронтенд) - [https://kerjanoid-movies.nomoredomains.club](https://kerjanoid-movies.nomoredomains.club)
+### :link: GitHub репозиторий (фронтенд) - [https://github.com/Kerjanoid/movies-explorer-frontend](https://github.com/Kerjanoid/movies-explorer-frontend)
